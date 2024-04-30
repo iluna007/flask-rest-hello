@@ -7,6 +7,9 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+   # favorites = db.Column(db.String(120), unique=False, nullable=False)
+   # favorite_planets = db.relationship('Favorite_Planets', backref='user', lazy='true')
+   # favorite_people = db.relationship('Favorite_People', backref='user', lazy='true')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -15,32 +18,12 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
-        }
-
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    favorites = db.Column(db.String(120), unique=False, nullable=False)
-   # favorite_planets = db.relationship('Favorite_Planets', backref='user', lazy='true')
-   # favorite_people = db.relationship('Favorite_People', backref='user', lazy='true')
-                                      
-
-
-    def __repr__(self):
-        return '<Users %r>' % self.usersname
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
             "password": self.password,
-            "is_active": self.email,
-            "favorites": self.favorites
+            "is_active": self.is_active,
+            "quenota": "que raro ??"
             # do not serialize the password, its a security breach
         }
+
     
 class People(db.Model):
     id = db.Column(db.Integer, primary_key=True)
