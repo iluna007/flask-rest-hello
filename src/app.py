@@ -35,49 +35,48 @@ def handle_invalid_usage(error):
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
+####################################################################
 
 @app.route('/user', methods=['GET'])
 def get_users():
 
-    all_user = User.query.all()
-    results = list(map(lambda element:element.serialize(), 
-    all_user))
+    all_users = User.query.all()
+    users = list(map(lambda element:element.serialize(), 
+    all_users))
 
-    return jsonify(response_body), 200
+    return jsonify(users), 200
 
-@app.route('/user/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    return jsonify(user.serialize()), 200
-
+####################################################################
 
 @app.route('/people', methods=['GET'])
 def get_people():
 
     all_people = People.query.all()
-    results = list(map(lambda element:element.serialize(), 
+    people = list(map(lambda element:element.serialize(), 
     all_people))
    
-    return jsonify(results), 200
+    return jsonify(people), 200
 
 @app.route('/people/<int:people_id>', methods=['GET'])
 def get_person(people_id):
     person = People.query.filter_by(id=people_id).first()
     return jsonify(person.serialize()), 200
+####################################################################
 
 @app.route('/planets', methods=['GET'])
 def get_planets():
 
     all_planets = Planets.query.all()
-    results = list(map(lambda element:element.serialize(), 
+    planets = list(map(lambda element:element.serialize(), 
     all_planets))
    
-    return jsonify(results), 200
+    return jsonify(planets), 200
 
 @app.route('/planets/<int:planet_id>', methods=['GET'])
 def get_planet(planet_id):
     planet = Planets.query.filter_by(id=planet_id).first()
     return jsonify(planet.serialize()), 200
+####################################################################
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

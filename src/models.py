@@ -72,10 +72,11 @@ class Planets(db.Model):
             "id": self.id,
             "name": self.name,
             "size": self.size,
+
             
             # do not serialize the password, its a security breach
         }
-    
+   
 class Favorite_People(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
