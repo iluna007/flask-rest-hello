@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, People, Planets, Favorite_Planet, Favorite_People
+from models import db, User, People, Planets, Favorite_Planets, Favorite_People
 #from models import Person
 
 app = Flask(__name__)
@@ -51,6 +51,13 @@ def get_users():
 
 ####################################################################GET /user/<int:user_id>
 
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return jsonify(user.serialize()), 200
+
+####################################################################GET /user/<int:user_id>
+
 @app.route('/people', methods=['GET'])
 def get_people():
 
@@ -84,9 +91,9 @@ def get_planet(planet_id):
 ####################################################################GET /favorites/planet
 
 @app.route('/favorites/planets/<int:favorite_id>', methods=['GET'])
-def get_favorite_planet(favorite_id):
-    all_favorite_planet = Favorite_Planet.query.filter_by(id=favorite_id).all()
-    results = list(map(lambda element:element.serialize(), all_favorite_planet))
+def get_favorite_planets(favorite_id):
+    all_favorite_planets = Favorite_Planets.query.filter_by(id=favorite_id).all()
+    results = list(map(lambda element:element.serialize(), all_favorite_planets))
 
     return jsonify(results), 200
 ####################################################################GET /favorites/people
@@ -100,14 +107,14 @@ def get_favorite_people(favorite_id):
 
 ####################################################################POST /favorites/planet
 
-@app.route('/favorites/planet', methods=['POST'])
+@app.route('/favorites/planets', methods=['POST'])
 def add_favorite_planet():
     print(request.get_json())
     user_id = request.get_json()['user_id']
-    planet_id = request.get_json()['planets_id']
+    planet_id = request.get_json()['planet_id']
 
-    favorite_planet = Favorite_Planet(user_id = user_id, planets_id = planet_id)
-    db.session.add(favorite_planet)
+    favorite_planets = Favorite_Planets(user_id = user_id, planets_id = planet_id)
+    db.session.add(favorite_planets)
     db.session.commit()
 
     response_body = {
@@ -122,14 +129,14 @@ def add_favorite_planet():
 def add_favorite_people():
     print(request.get_json())
     user_id = request.get_json()['user_id']
-    people_id = request.get_json()['peoples_id']
+    people_id = request.get_json()['people_id']
 
     favorite_people = Favorite_People(user_id = user_id, people_id = people_id)
     db.session.add(favorite_people)
     db.session.commit()
 
     response_body = {
-       'message': 'Character Favorito añadido correctamente'
+       'message': 'La persona se agregó a favoritos'
     }
 
     return jsonify(response_body), 200
@@ -158,7 +165,7 @@ def delete_favorite_people(people_id):
 
 @app.route('/favorites/planet/delete/<int:planet_id>', methods=['DELETE'])
 def delete_favorite_planet(planet_id):
-    delete = Favorite_Planet.query.filter_by(id=planet_id).first()
+    delete = Favorite_Planets.query.filter_by(id=planet_id).first()
 
     if delete:
         
