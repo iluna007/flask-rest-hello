@@ -1,6 +1,6 @@
 import os
 from flask_admin import Admin
-from models import db, User, People, Planets
+from models import db, User, People, Planets, Favorite_Planet, Favorite_People
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -16,7 +16,9 @@ def setup_admin(app):
 
     admin.add_view(ModelView(Planets, db.session))
 
+    admin.add_view(ModelView(Favorite_Planet, db.session))
 
+    admin.add_view(ModelView(Favorite_People, db.session))
 
 
 
