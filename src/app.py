@@ -152,7 +152,7 @@ def delete_favorite_people(people_id):
         db.session.commit()
 
         response_body = {
-           'message': 'Character Favorito eliminado correctamente'
+           'message': 'La persona se eliminó de favoritos correctamente'
         }
         return jsonify(response_body), 200
     else:
@@ -173,7 +173,7 @@ def delete_favorite_planet(planet_id):
         db.session.commit()
 
         response_body = {
-           'message': 'Planeta Favorito eliminado correctamente'
+           'message': 'El planeta se eliminó de favoritos correctamente'
         }
         return jsonify(response_body), 200
     else:
