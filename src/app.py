@@ -96,6 +96,28 @@ def get_favorite_planets(favorite_id):
     results = list(map(lambda element:element.serialize(), all_favorite_planets))
 
     return jsonify(results), 200
+####################################################################GET /user/<int:user_id>/favorites
+
+@app.route('/user/<int:user_id>/favorite_planets', methods=['GET'])
+def get_user_favorite_planets(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    favorite_planets = [favorite_planets.serialize() for favorite_planets in user.favorite_planets]
+    return jsonify(favorite_planets), 200
+
+####################################################################GET /user/<int:user_id>/favorites
+
+@app.route('/user/<int:user_id>/favorite_people', methods=['GET'])
+def get_user_favorite_people(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    favorite_people = [favorite_people.serialize() for favorite_people in user.favorite_people]
+    return jsonify(favorite_people), 200
+
 ####################################################################GET /favorites/people
 
 @app.route('/favorites/people/<int:favorite_id>', methods=['GET'])

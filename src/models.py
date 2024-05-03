@@ -21,7 +21,7 @@ class User(db.Model):
             # do not serialize the password, its a security breach
             "is_active": self.is_active,
             "favorite_planets": list(map(lambda x: x.serialize(), self.favorite_planets)),
-            "Favorite_People": list(map(lambda x: x.serialize(), self.favorite_people)),
+            "favorite_people": list(map(lambda x: x.serialize(), self.favorite_people)),
         }
 
     
